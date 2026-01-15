@@ -2,7 +2,6 @@ name: fsd_lint
 description: Lint rules for Feature Sliced Design architecture
 repository: https://github.com/dennis-emstone/fsd_lint
 version: 0.1.0
-publish_to: "none"
 
 environment:
   sdk: ^3.10.1
