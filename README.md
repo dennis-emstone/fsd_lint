@@ -17,16 +17,13 @@ Feature Sliced Design(FSD) 아키텍처를 위한 커스텀 lint 규칙 패키�
 app > pages > widgets > features > entities > shared
 ```
 
-**예시**:
-```dart
 // ✅ 허용: pages가 하위 레이어인 entities를 import
 // lib/pages/server_list/server_list.dart
-import 'package:moview/entities/server/server.dart';
+import 'package:example/entities/server/server.dart';
 
 // ❌ 에러: entities가 상위 레이어인 pages를 import
 // lib/entities/server/server.dart
-import 'package:moview/pages/server_list/server_list.dart';
-```
+import 'package:example/pages/server_list/server_list.dart';
 
 ### 2. `fsd_slice_import` (WARNING)
 
@@ -39,7 +36,7 @@ import 'package:moview/pages/server_list/server_list.dart';
 ```dart
 // ❌ 경고: features 레이어 내 다른 slice 직접 import
 // lib/features/server_add/server_add.dart
-import 'package:moview/features/server_list/server_list.dart';
+import 'package:example/features/server_list/server_list.dart';
 ```
 
 ## 설치 방법
@@ -48,9 +45,6 @@ import 'package:moview/features/server_list/server_list.dart';
 
 ```
 your_project/
-├── custom_lint_rules/    # 이 패키지
-│   ├── lib/
-│   └── pubspec.yaml
 ├── lib/
 │   ├── app/
 │   ├── pages/
@@ -69,8 +63,7 @@ your_project/
 ```yaml
 dev_dependencies:
   custom_lint: ^0.8.1
-  custom_lint_rules:
-    path: custom_lint_rules/
+  fsd_lint: ^0.1.0
 ```
 
 ### 3. analysis_options.yaml 설정
@@ -118,7 +111,6 @@ dart run custom_lint --watch
 
 1. **하향 의존성만 허용**: 상위 레이어 → 하위 레이어
 2. **같은 레이어 내 격리**: 같은 레이어의 slice끼리는 직접 의존하지 않음
-3. **shared를 통한 공유**: 공통 기능은 shared 레이어로 추출
 
 ## 개발
 
@@ -126,14 +118,7 @@ dart run custom_lint --watch
 
 1. `lib/src/lints/` 디렉토리에 새 lint 파일 생성
 2. `DartLintRule`을 상속하는 클래스 작성
-3. `lib/custom_lint_rules.dart`의 `getLintRules`에 추가
-
-### 테스트
-
-```bash
-cd custom_lint_rules
-flutter test
-```
+3. `lib/fsd_lint.dart`의 `getLintRules`에 추가
 
 ## 라이선스
 
