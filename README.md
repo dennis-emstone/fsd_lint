@@ -25,7 +25,7 @@ import 'package:example/entities/server/server.dart';
 // lib/entities/server/server.dart
 import 'package:example/pages/server_list/server_list.dart';
 
-### 2. `fsd_slice_import` (WARNING)
+### 2. `fsd_slice_import` (ERROR)
 
 **목적**: 같은 레이어 내 slice 간 직접 의존성을 방지합니다.
 
@@ -34,7 +34,7 @@ import 'package:example/pages/server_list/server_list.dart';
 
 **예시**:
 ```dart
-// ❌ 경고: features 레이어 내 다른 slice 직접 import
+// ❌ 에러: features 레이어 내 다른 slice 직접 import
 // lib/features/server_add/server_add.dart
 import 'package:example/features/server_list/server_list.dart';
 ```
