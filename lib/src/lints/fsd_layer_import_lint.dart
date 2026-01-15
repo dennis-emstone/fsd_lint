@@ -21,7 +21,7 @@ class FsdLayerImportLint extends DartLintRule {
     problemMessage:
         'Layer "{0}" cannot import from layer "{1}". '
         'Only lower layers can be imported. '
-        'Layer hierarchy: app > pages > features > entities > shared > widgets',
+        'Layer hierarchy: app > pages > widgets > features > entities > shared',
     errorSeverity: analyzer_error.DiagnosticSeverity.ERROR,
   );
 
