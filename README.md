@@ -1,5 +1,7 @@
 # Lint rules for FSD
 
+[한국어 버전 (Korean Version)](./README_ko.md)
+
 A custom lint rules package for the Feature Sliced Design (FSD) architecture.
 
 ## Rules List
