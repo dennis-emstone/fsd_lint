@@ -1,3 +1,7 @@
+# 0.1.3
+
+- added checking file slice
+
 # 0.1.2
 
 - added support for relative path
