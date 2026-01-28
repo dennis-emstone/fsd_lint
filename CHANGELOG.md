@@ -1,3 +1,7 @@
+# 0.1.2
+
+- added support for relative path
+
 # 0.1.1
 
 - update fsd_slice_import as error
