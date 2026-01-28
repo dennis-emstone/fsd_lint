@@ -2,6 +2,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/error/error.dart' as analyzer_error;
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:path/path.dart' as p;
 
 import 'package:fsd_lint/src/models/fsd_structure.dart';
 
@@ -41,18 +42,21 @@ class FsdLayerImportLint extends DartLintRule {
     CustomLintResolver resolver,
     DiagnosticReporter reporter,
   ) {
-    final importPath = node.uri.stringValue;
-    if (importPath == null) return;
-
-    // package import만 검사 (상대 경로 import는 제외)
-    if (!importPath.startsWith('package:')) return;
-
-    // 현재 파일의 경로
-    final currentFilePath = resolver.path;
+    final importUri = node.uri.stringValue;
+    if (importUri == null) return;
 
     // 현재 파일의 레이어
-    final currentLayer = FsdLayer.fromPath(currentFilePath);
+    final currentLayer = FsdLayer.fromPath(resolver.path);
     if (currentLayer == null) return;
+
+    String importPath;
+    if (importUri.startsWith('package:')) {
+      importPath = importUri;
+    } else {
+      // 상대 경로를 절대 경로로 변환
+      final currentFileDir = p.dirname(resolver.path);
+      importPath = p.normalize(p.join(currentFileDir, importUri));
+    }
 
     // import된 파일의 레이어
     final importedLayer = FsdLayer.fromPath(importPath);
