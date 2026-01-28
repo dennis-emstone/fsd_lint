@@ -2,6 +2,7 @@ import 'package:analyzer/dart/ast/ast.dart';
 import 'package:analyzer/error/error.dart' as analyzer_error;
 import 'package:analyzer/error/listener.dart';
 import 'package:custom_lint_builder/custom_lint_builder.dart';
+import 'package:path/path.dart' as p;
 
 import 'package:fsd_lint/src/models/fsd_structure.dart';
 
@@ -39,11 +40,8 @@ class FsdSliceImportLint extends DartLintRule {
     CustomLintResolver resolver,
     DiagnosticReporter reporter,
   ) {
-    final importPath = node.uri.stringValue;
-    if (importPath == null) return;
-
-    // package import만 검사
-    if (!importPath.startsWith('package:')) return;
+    final importUri = node.uri.stringValue;
+    if (importUri == null) return;
 
     // 현재 파일의 Slice
     final currentSlice = FsdSlice.fromPath(resolver.path);
@@ -51,6 +49,15 @@ class FsdSliceImportLint extends DartLintRule {
 
     // shared 레이어는 검사하지 않음 (공유 코드이므로)
     if (currentSlice.layer == FsdLayer.shared) return;
+
+    String importPath;
+    if (importUri.startsWith('package:')) {
+      importPath = importUri;
+    } else {
+      // 상대 경로를 절대 경로로 변환
+      final currentFileDir = p.dirname(resolver.path);
+      importPath = p.normalize(p.join(currentFileDir, importUri));
+    }
 
     // import된 파일의 Slice
     final importedSlice = FsdSlice.fromPath(importPath);
