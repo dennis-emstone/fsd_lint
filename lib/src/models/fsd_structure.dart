@@ -41,21 +41,28 @@ class FsdSlice {
 
   /// 파일 경로에서 Slice 정보 추출
   /// 예: lib/features/server_add/server_add.dart -> FsdSlice(features, server_add)
+  /// 예: lib/entities/user.dart -> FsdSlice(entities, user)
   static FsdSlice? fromPath(String path) {
     final layer = FsdLayer.fromPath(path);
     if (layer == null) return null;
 
-    // lib/layer/slice_name/... 패턴 또는 package:name/layer/slice_name/... 패턴 처리
-    final regex = RegExp(
-      '(?:/lib/|package:[^/]+/)(app|pages|widgets|features|entities|shared)/([^/]+)/',
-    );
-    final match = regex.firstMatch(path);
-    if (match == null) return null;
+    final layerName = layer.name;
 
-    final sliceName = match.group(2);
-    if (sliceName == null) return null;
+    // Find the part of the path that comes after the layer name
+    // This handles both '/layerName/sliceName/...' and '/layerName/sliceName.dart'
+    final parts = path.split('/');
+    final layerSegmentIndex = parts.indexOf(layerName);
 
-    return FsdSlice(layer: layer, name: sliceName);
+    if (layerSegmentIndex != -1 && layerSegmentIndex + 1 < parts.length) {
+      final nextSegment = parts[layerSegmentIndex + 1];
+      // The slice name is the segment directly after the layer name,
+      // stripping any file extension.
+      final sliceName = nextSegment.split('.').first;
+      if (sliceName.isEmpty) return null;
+      return FsdSlice(layer: layer, name: sliceName);
+    }
+
+    return null;
   }
 
   @override
