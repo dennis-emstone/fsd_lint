@@ -2,5 +2,7 @@
 import '../../features/login/login_flow.dart';
 
 class BadRelativeLayerImport {
-  // This class doesn't need to do anything, it just needs the import.
+  final LoginFlow loginFlow;
+
+  BadRelativeLayerImport(this.loginFlow);
 }

@@ -47,8 +47,10 @@ class FsdSliceImportLint extends DartLintRule {
     final currentSlice = FsdSlice.fromPath(resolver.path);
     if (currentSlice == null) return;
 
-    // shared 레이어는 검사하지 않음 (공유 코드이므로)
-    if (currentSlice.layer == FsdLayer.shared) return;
+    // app and shared 레이어는 검사하지 않음
+    if (currentSlice.layer == FsdLayer.shared ||
+        currentSlice.layer == FsdLayer.app)
+      return;
 
     String importPath;
     if (importUri.startsWith('package:')) {

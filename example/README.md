@@ -16,6 +16,8 @@ It follows a standard FSD structure:
 ### Valid Imports
 - `lib/features/login/login_flow.dart`: Imports `entities` (Higher -> Lower).
 - `lib/pages/home/home_page.dart`: Imports `features` (Higher -> Lower).
+- `lib/app/routes/router.dart` : Imports `<segment>` segment in app layer.
+- `lib/shared/ui/login_button` : Imports `<segment>` segment in shared layer.
 
 ### Invalid Imports (Should trigger lints)
 - `lib/entities/user/bad_layer_import.dart`: Imports `features` (Lower -> Higher hierarchy violation).
