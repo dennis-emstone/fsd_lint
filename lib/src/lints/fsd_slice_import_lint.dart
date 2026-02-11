@@ -20,7 +20,7 @@ class FsdSliceImportLint extends DartLintRule {
     name: 'fsd_slice_import',
     problemMessage:
         'Slice "{0}" cannot directly import from slice "{1}" in the same layer.',
-    correctionMessage: 'Move shared functionality to the shared layer.',
+    correctionMessage: 'Move imported code to a layer below.',
     errorSeverity: analyzer_error.DiagnosticSeverity.ERROR,
   );
 
