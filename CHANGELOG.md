@@ -1,3 +1,8 @@
+# 0.1.4
+
+- Change correction message for the fsd_slice_import rule (#1)
+- fsd_slice_import rule triggered by segments importing from each other in app/ layer (#2)
+
 # 0.1.3
 
 - added checking file slice
