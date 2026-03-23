@@ -2,5 +2,7 @@
 import '../payment/payment.dart';
 
 class BadRelativeSliceImport {
-  // This class doesn't need to do anything, it just needs the import.
+  final Payment payment;
+
+  BadRelativeSliceImport(this.payment);
 }
